@@ -24,3 +24,13 @@ def get_all_users(db_session: Session = Depends(get_db)):
 @router.get('/{id}', response_model=UserDisplay | None)
 def get_single_user(id: int, db_session: Session = Depends(get_db)):
     return db_user.get_user_by_id(db_session, id)
+
+
+@router.put('/{id}')
+def update_user(id: int, request: UserBase, db_session: Session = Depends(get_db)):
+    return db_user.update_user(db_session, id, request)
+
+
+@router.delete('/{id}')
+def delete_user(id: int, db_session: Session = Depends(get_db)):
+    return db_user.delete_user(db_session, id)
