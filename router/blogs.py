@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Path
+from fastapi import APIRouter, Query, Path, Body
 from models.blogs import BlogModel
 
 router = APIRouter(
@@ -28,5 +28,10 @@ def get_specific_blog(id: int = Path(title='Id of the blog',
 
 
 @router.post('/')
-def create_blog(blog: BlogModel):
-    return blog
+def create_blog(blog: BlogModel,
+                # content: str = Body(Ellipsis)
+                # content: str = Body('hi this is content')
+                content: str = Body(..., min_length=2,
+                                    max_length=100, regex='^[a-z\s]*$')
+                ):
+    return {'blog': blog, 'content': content}
