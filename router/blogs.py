@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Query, Path, Body
+from fastapi import APIRouter, Query, Path, Body, Depends
 from models.blogs import BlogModel
 from typing import Optional
+from sample_dep.req_func import required_functionality
 
 router = APIRouter(
     prefix='/blogs',
@@ -9,11 +10,11 @@ router = APIRouter(
 
 
 @router.get('/all')
-def get_all_blogs():
+def get_all_blogs(some_dep: str = Depends(required_functionality)):
     return [
-        {'id': 1, 'title': 'karan'},
-        {'id': 2, 'title': 'arsh'},
-        {'id': 3, 'title': 'something'}
+        {'id': 1, 'title': 'karan', 'comment': some_dep},
+        {'id': 2, 'title': 'arsh', 'comment': some_dep},
+        {'id': 3, 'title': 'something', 'comment': some_dep}
     ]
 
 
