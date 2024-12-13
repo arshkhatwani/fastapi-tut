@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Query, Path, Body
 from models.blogs import BlogModel
+from typing import Optional
 
 router = APIRouter(
     prefix='/blogs',
@@ -32,6 +33,7 @@ def create_blog(blog: BlogModel,
                 # content: str = Body(Ellipsis)
                 # content: str = Body('hi this is content')
                 content: str = Body(..., min_length=2,
-                                    max_length=100, regex='^[a-z\s]*$')
+                                    max_length=100, regex='^[a-z\s]*$'),
+                tags: Optional[list[str]] = Query(None)
                 ):
-    return {'blog': blog, 'content': content}
+    return {'blog': blog, 'content': content, 'tags': tags}
