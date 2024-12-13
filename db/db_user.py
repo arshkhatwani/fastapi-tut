@@ -16,3 +16,13 @@ def create_user(db: Session, request: UserBase):
     db.refresh(new_user)
 
     return new_user
+
+
+def get_users(db: Session):
+    users = db.query(DbUser).all()
+    return users
+
+
+def get_user_by_id(db: Session, id: int):
+    user = db.query(DbUser).filter(DbUser.id == id).first()
+    return user
