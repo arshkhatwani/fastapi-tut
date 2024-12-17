@@ -28,6 +28,11 @@ def get_user_by_id(db: Session, id: int):
     return user
 
 
+def get_user_by_name(db: Session, name: str):
+    user = db.query(DbUser).filter(DbUser.name == name).first()
+    return user
+
+
 def update_user(db: Session, id: int, request: UserBase):
     user = db.query(DbUser).filter(DbUser.id == id)
     user.update({
