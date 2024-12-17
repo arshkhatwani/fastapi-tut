@@ -4,6 +4,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 from db import db_user
+from auth.oauth2 import oauth2_schema
 
 
 router = APIRouter(prefix='/users', tags=['users'])
@@ -22,7 +23,8 @@ def get_all_users(db_session: Session = Depends(get_db)):
 
 
 @router.get('/{id}', response_model=UserDisplay | None)
-def get_single_user(id: int, db_session: Session = Depends(get_db)):
+def get_single_user(id: int, db_session: Session = Depends(get_db),
+                    token: str = Depends(oauth2_schema)):
     return db_user.get_user_by_id(db_session, id)
 
 
